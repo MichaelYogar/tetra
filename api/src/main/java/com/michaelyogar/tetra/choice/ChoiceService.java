@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ChoiceService {
-    private final ChoiceRepository<Choice> choiceRepository;
+    private final ChoiceRepository choiceRepository;
 
     @Autowired
-    public ChoiceService(ChoiceRepository<Choice> choiceRepository) {
+    public ChoiceService(ChoiceRepository choiceRepository) {
         this.choiceRepository = choiceRepository;
     }
 

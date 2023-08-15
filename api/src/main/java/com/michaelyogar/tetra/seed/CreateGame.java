@@ -16,13 +16,13 @@ import java.util.Random;
 
 @Component
 public class CreateGame implements CommandLineRunner {
-    private final GameRepository<Game> gameRepository;
-    private final QuestionRepository<Question> questionRepository;
-    private final ChoiceRepository<Choice> choiceRepository;
+    private final GameRepository gameRepository;
+    private final QuestionRepository questionRepository;
+    private final ChoiceRepository choiceRepository;
     private final AnswerRepository answerRepository;
 
     @Autowired
-    public CreateGame(GameRepository<Game> gameRepository, QuestionRepository<Question> questionRepository, ChoiceRepository<Choice> choiceRepository, AnswerRepository answerRepository) {
+    public CreateGame(GameRepository gameRepository, QuestionRepository questionRepository, ChoiceRepository choiceRepository, AnswerRepository answerRepository) {
         this.gameRepository = gameRepository;
         this.questionRepository = questionRepository;
         this.choiceRepository = choiceRepository;
@@ -31,7 +31,7 @@ public class CreateGame implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        for (int i = 0; i < 2; i++){
+        for (int i = 0; i < 2; i++) {
             createGame(i);
         }
     }
@@ -39,7 +39,7 @@ public class CreateGame implements CommandLineRunner {
     private void createGame(int index) {
         Game game = new Game();
 
-        for (int i = 0; i < 2; i++){
+        for (int i = 0; i < 2; i++) {
             Question question = new Question();
             question.setTitle("Question " + i);
             game.getQuestions().add(question);
@@ -75,17 +75,13 @@ public class CreateGame implements CommandLineRunner {
         gameRepository.save(game);
     }
 
-    private String getRandomString(){
+    private String getRandomString() {
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 10;
         Random random = new Random();
 
-        String generatedString = random.ints(leftLimit, rightLimit + 1)
-                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
-                .limit(targetStringLength)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
+        String generatedString = random.ints(leftLimit, rightLimit + 1).filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97)).limit(targetStringLength).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
         return generatedString;
     }
 

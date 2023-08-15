@@ -19,14 +19,18 @@ public class GameController {
 
     @GetMapping("{id}")
     public Game get(@PathVariable("id") long id) {
-        return service.getGameById(id);
+        return service.findGameById(id);
     }
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@Valid @RequestBody GameDto gameDto) {
         Game game = GameMapper.MAPPER.gameDtoToGame(gameDto);
-        service.createGame(game);
+        try {
+            service.createGame(game);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PutMapping("{id}")

@@ -26,6 +26,9 @@ public class Game {
     @JoinColumn(name = "fk_game_id")
     private List<Question> questions = new ArrayList<>();
 
+    @Column(nullable = false, columnDefinition = "TINYINT(1)")
+    private boolean sent;
+
     public Long getGameId() {
         return game_id;
     }
@@ -48,5 +51,13 @@ public class Game {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isSent() {
+        return sent;
+    }
+
+    public void setSent(boolean sent) {
+        this.sent = sent;
     }
 }

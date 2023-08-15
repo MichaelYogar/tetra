@@ -12,25 +12,26 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class GameService {
-    private final GameRepository<Game> repository;
+    private final GameRepository gameRepository;
     private final QuestionService questionService;
     private final ChoiceService choiceService;
 
     @Autowired
-    public GameService(GameRepository<Game> repository, QuestionService questionService, ChoiceService choiceService) {
-        this.repository = repository;
+    public GameService(GameRepository repository, QuestionService questionService, ChoiceService choiceService) {
+        this.gameRepository = repository;
         this.questionService = questionService;
         this.choiceService = choiceService;
     }
 
-    public Game getGameById(long id) {
-        Game game = repository.findById(Game.class, id);
+    public Game findGameById(long id) {
+        Game game = gameRepository.findById(id);
         if (game == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Game with id %d not found", id));
         return game;
     }
 
-    public void createGame(Game game) {
+    @Transactional()
+    public void createGame(Game game) throws Exception {
         for (Question question : game.getQuestions()) {
 
             for (Choice choice : question.getChoices())
@@ -39,11 +40,12 @@ public class GameService {
             this.questionService.save(question);
         }
 
-        repository.save(game);
+        game.setSent(false);
+        gameRepository.save(game);
     }
 
     @Transactional()
     public int updateNameById(long id, String name) {
-        return repository.updateNameById(id, name);
+        return gameRepository.updateNameById(id, name);
     }
 }

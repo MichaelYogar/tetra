@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class QuestionService {
-    private final QuestionRepository<Question> questionRepository;
+    private final QuestionRepository questionRepository;
 
     @Autowired
-    public QuestionService(QuestionRepository<Question> questionRepository) {
+    public QuestionService(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
 

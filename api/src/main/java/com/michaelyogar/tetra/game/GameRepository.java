@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class GameRepository<T> extends BaseRepository<T> {
+public class GameRepository extends BaseRepository<Game> {
 
     private final EntityManager em;
 
@@ -15,7 +15,8 @@ public class GameRepository<T> extends BaseRepository<T> {
     }
 
     public int updateNameById(long id, String name) {
-        String q = "UPDATE Game t SET t.name = :name WHERE id = :id";
+        getClassName();
+        String q = "UPDATE Game g SET g.name = :name WHERE id = :id";
         return em.createQuery(q).setParameter("id", id).setParameter("name", name).executeUpdate();
     }
 }
