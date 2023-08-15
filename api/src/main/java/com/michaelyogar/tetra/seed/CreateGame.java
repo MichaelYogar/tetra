@@ -16,13 +16,13 @@ import java.util.Random;
 
 @Component
 public class CreateGame implements CommandLineRunner {
-    private final GameRepository gameRepository;
+    private final GameRepository<Game> gameRepository;
     private final QuestionRepository<Question> questionRepository;
     private final ChoiceRepository<Choice> choiceRepository;
     private final AnswerRepository answerRepository;
 
     @Autowired
-    public CreateGame(GameRepository gameRepository, QuestionRepository questionRepository, ChoiceRepository choiceRepository, AnswerRepository answerRepository) {
+    public CreateGame(GameRepository<Game> gameRepository, QuestionRepository<Question> questionRepository, ChoiceRepository<Choice> choiceRepository, AnswerRepository answerRepository) {
         this.gameRepository = gameRepository;
         this.questionRepository = questionRepository;
         this.choiceRepository = choiceRepository;
@@ -31,38 +31,62 @@ public class CreateGame implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Question question = new Question();
-        question.setTitle("New Question 2");
+        for (int i = 0; i < 2; i++){
+            createGame(i);
+        }
+    }
 
-        int numOfChoices = 4;
-        int randomNumber = getRandomNumber(numOfChoices);
+    private void createGame(int index) {
+        Game game = new Game();
 
-        Choice answerChoice = null;
+        for (int i = 0; i < 2; i++){
+            Question question = new Question();
+            question.setTitle("Question " + i);
+            game.getQuestions().add(question);
 
-        for (int i = 0; i < numOfChoices; i++) {
-            Choice choice = new Choice();
-            choice.setChoiceText("Choice: " + i);
-            choice.setCorrect(false);
+            int numOfChoices = 2;
+            int randomNumber = getRandomNumber(numOfChoices);
 
-            if (i == randomNumber) {
-                choice.setCorrect(true);
-                answerChoice = choice;
+            Choice answerChoice = null;
+
+            for (int j = 0; j < numOfChoices; j++) {
+                Choice choice = new Choice();
+                choice.setChoiceText(getRandomString());
+                choice.setCorrect(false);
+
+                if (j == randomNumber) {
+                    choice.setCorrect(true);
+                    answerChoice = choice;
+                }
+
+                choiceRepository.save(choice);
+                question.getChoices().add(choice);
             }
 
-            choiceRepository.save(choice);
-            question.getChoices().add(choice);
+            questionRepository.save(question);
+
+            Answer answer = new Answer();
+            answer.setQuestion(question);
+            answer.setChoice(answerChoice);
+            answerRepository.save(answer);
         }
 
-        questionRepository.save(question);
-
-        Answer answer = new Answer();
-        answer.setQuestion(question);
-        answer.setChoice(answerChoice);
-        answerRepository.save(answer);
-
-        Game game = new Game();
-        game.getQuestions().add(question);
+        game.setName("Game " + index);
         gameRepository.save(game);
+    }
+
+    private String getRandomString(){
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+        return generatedString;
     }
 
     private int getRandomNumber(int upperBound) {
