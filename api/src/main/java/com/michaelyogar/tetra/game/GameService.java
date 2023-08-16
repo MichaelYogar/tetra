@@ -30,6 +30,15 @@ public class GameService {
         return game;
     }
 
+    public Game findOldestUnsentGame() {
+        try {
+            return gameRepository.findOldestUnsentGame();
+        } catch (Exception e) {
+            System.out.println("Game not found");
+            return null;
+        }
+    }
+
     @Transactional()
     public void createGame(Game game) throws Exception {
         for (Question question : game.getQuestions()) {
@@ -44,7 +53,13 @@ public class GameService {
         gameRepository.save(game);
     }
 
-    @Transactional()
+
+    @Transactional
+    public int updateSentById(long id, boolean sent) {
+        return gameRepository.updateSentById(id, sent);
+    }
+
+    @Transactional
     public int updateNameById(long id, String name) {
         return gameRepository.updateNameById(id, name);
     }
