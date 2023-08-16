@@ -1,33 +1,41 @@
 package com.michaelyogar.tetra.schedule;
 
 import com.michaelyogar.tetra.app.choice.ChoiceService;
-import com.michaelyogar.tetra.app.email.AwsSesEmailService;
 import com.michaelyogar.tetra.app.game.Game;
 import com.michaelyogar.tetra.app.game.GameService;
+import com.michaelyogar.tetra.app.user.User;
+import com.michaelyogar.tetra.app.user.UserService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
 @Component
 public class MailGame {
-    private final AwsSesEmailService awsSesEmailService;
-    private final GameService gameService;
-    private final ChoiceService choiceService;
-
+    private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
 
+    private final GameService gameService;
+    private final ChoiceService choiceService;
+    private final UserService userService;
 
     @Autowired
-    public MailGame(AwsSesEmailService awsSesEmailService, GameService gameService, ChoiceService choiceService, TemplateEngine templateEngine) {
+    public MailGame(JavaMailSender mailSender, TemplateEngine templateEngine, GameService gameService, ChoiceService choiceService, UserService userService) {
+        this.mailSender = mailSender;
+        this.templateEngine = templateEngine;
         this.gameService = gameService;
         this.choiceService = choiceService;
-        this.awsSesEmailService = awsSesEmailService;
-        this.templateEngine = templateEngine;
+        this.userService = userService;
     }
 
     @Scheduled(fixedRate = 5000)
@@ -35,6 +43,7 @@ public class MailGame {
 
         Game game = gameService.findOldestUnsentGame();
 
+        // TODO: Needs better error handling before going to production
         if (game == null) {
             System.out.println("Game not found, cant send email");
             return;
@@ -45,9 +54,12 @@ public class MailGame {
 
         Map<String, List<String>> multipleChoices = choiceService.findMultipleChoiceByGameId(gameId);
         String content = generateEmail(gameName, multipleChoices);
-        System.out.println(content);
 
-        awsSesEmailService.sendEmail("tentenmichael@gmail.com", "test", content);
+        List<User> users = this.userService.findAllUsers();
+
+        for (User user : users)
+            sendEmail(user.getEmailAddress(), "test", content);
+
 
         gameService.updateSentById(gameId, true);
     }
@@ -57,5 +69,15 @@ public class MailGame {
         context.setVariable("gameName", gameName);
         context.setVariable("multipleChoices", multipleChoices);
         return templateEngine.process("welcome", context);
+    }
+
+    private void sendEmail(String recipient, String subject, String content) throws UnsupportedEncodingException, MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED, StandardCharsets.UTF_8.name());
+        helper.setFrom("michaelyogar878@gmail.com", "My Email Address");
+        helper.setTo(recipient);
+        helper.setSubject(subject);
+        helper.setText(content, true);
+        mailSender.send(message);
     }
 }
