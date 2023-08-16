@@ -1,9 +1,9 @@
 package com.michaelyogar.tetra.schedule;
 
-import com.michaelyogar.tetra.choice.ChoiceService;
-import com.michaelyogar.tetra.email.AwsSesEmailService;
-import com.michaelyogar.tetra.game.Game;
-import com.michaelyogar.tetra.game.GameService;
+import com.michaelyogar.tetra.app.choice.ChoiceService;
+import com.michaelyogar.tetra.app.email.AwsSesEmailService;
+import com.michaelyogar.tetra.app.game.Game;
+import com.michaelyogar.tetra.app.game.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

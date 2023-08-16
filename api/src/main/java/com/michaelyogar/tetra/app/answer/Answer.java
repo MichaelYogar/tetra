@@ -1,7 +1,7 @@
-package com.michaelyogar.tetra.answer;
+package com.michaelyogar.tetra.app.answer;
 
-import com.michaelyogar.tetra.choice.Choice;
-import com.michaelyogar.tetra.question.Question;
+import com.michaelyogar.tetra.app.choice.Choice;
+import com.michaelyogar.tetra.app.question.Question;
 import jakarta.persistence.*;
 
 @Entity

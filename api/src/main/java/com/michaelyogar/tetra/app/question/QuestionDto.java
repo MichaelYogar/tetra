@@ -1,6 +1,6 @@
-package com.michaelyogar.tetra.question;
+package com.michaelyogar.tetra.app.question;
 
-import com.michaelyogar.tetra.choice.ChoiceDto;
+import com.michaelyogar.tetra.app.choice.ChoiceDto;
 
 import java.util.List;
 

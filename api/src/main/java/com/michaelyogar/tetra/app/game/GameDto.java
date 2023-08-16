@@ -1,6 +1,6 @@
-package com.michaelyogar.tetra.game;
+package com.michaelyogar.tetra.app.game;
 
-import com.michaelyogar.tetra.question.QuestionDto;
+import com.michaelyogar.tetra.app.question.QuestionDto;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;

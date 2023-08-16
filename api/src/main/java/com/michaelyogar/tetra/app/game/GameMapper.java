@@ -1,6 +1,6 @@
-package com.michaelyogar.tetra.game;
+package com.michaelyogar.tetra.app.game;
 
-import com.michaelyogar.tetra.choice.ChoiceMapper;
+import com.michaelyogar.tetra.app.choice.ChoiceMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

@@ -1,4 +1,4 @@
-package com.michaelyogar.tetra.game;
+package com.michaelyogar.tetra.app.game;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

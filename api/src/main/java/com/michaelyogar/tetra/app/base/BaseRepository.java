@@ -1,4 +1,4 @@
-package com.michaelyogar.tetra.repository;
+package com.michaelyogar.tetra.app.base;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;

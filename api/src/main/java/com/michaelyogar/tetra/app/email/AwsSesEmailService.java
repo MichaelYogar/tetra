@@ -1,4 +1,4 @@
-package com.michaelyogar.tetra.email;
+package com.michaelyogar.tetra.app.email;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

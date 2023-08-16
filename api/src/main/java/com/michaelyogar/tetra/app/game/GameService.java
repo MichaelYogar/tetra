@@ -1,9 +1,9 @@
-package com.michaelyogar.tetra.game;
+package com.michaelyogar.tetra.app.game;
 
-import com.michaelyogar.tetra.choice.Choice;
-import com.michaelyogar.tetra.choice.ChoiceService;
-import com.michaelyogar.tetra.question.Question;
-import com.michaelyogar.tetra.question.QuestionService;
+import com.michaelyogar.tetra.app.choice.ChoiceService;
+import com.michaelyogar.tetra.app.choice.Choice;
+import com.michaelyogar.tetra.app.question.Question;
+import com.michaelyogar.tetra.app.question.QuestionService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

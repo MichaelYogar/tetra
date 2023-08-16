@@ -1,6 +1,6 @@
-package com.michaelyogar.tetra.game;
+package com.michaelyogar.tetra.app.game;
 
-import com.michaelyogar.tetra.question.Question;
+import com.michaelyogar.tetra.app.question.Question;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

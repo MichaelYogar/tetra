@@ -1,4 +1,4 @@
-package com.michaelyogar.tetra.choice;
+package com.michaelyogar.tetra.app.choice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

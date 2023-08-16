@@ -1,11 +1,9 @@
-package com.michaelyogar.tetra.question;
+package com.michaelyogar.tetra.app.question;
 
-import com.michaelyogar.tetra.repository.BaseRepository;
+import com.michaelyogar.tetra.app.base.BaseRepository;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public class QuestionRepository extends BaseRepository<Question> {

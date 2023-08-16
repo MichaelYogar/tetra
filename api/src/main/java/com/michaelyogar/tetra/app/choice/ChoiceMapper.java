@@ -1,4 +1,4 @@
-package com.michaelyogar.tetra.choice;
+package com.michaelyogar.tetra.app.choice;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

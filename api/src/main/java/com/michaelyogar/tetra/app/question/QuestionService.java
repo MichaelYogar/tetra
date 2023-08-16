@@ -1,4 +1,4 @@
-package com.michaelyogar.tetra.question;
+package com.michaelyogar.tetra.app.question;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

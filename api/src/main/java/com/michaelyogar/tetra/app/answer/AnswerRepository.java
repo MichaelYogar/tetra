@@ -1,4 +1,4 @@
-package com.michaelyogar.tetra.answer;
+package com.michaelyogar.tetra.app.answer;
 
 import org.springframework.data.repository.CrudRepository;
 

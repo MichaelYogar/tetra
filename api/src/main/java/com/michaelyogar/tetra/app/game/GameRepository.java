@@ -1,6 +1,6 @@
-package com.michaelyogar.tetra.game;
+package com.michaelyogar.tetra.app.game;
 
-import com.michaelyogar.tetra.repository.BaseRepository;
+import com.michaelyogar.tetra.app.base.BaseRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.springframework.stereotype.Repository;

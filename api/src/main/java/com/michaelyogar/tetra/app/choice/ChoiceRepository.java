@@ -1,6 +1,6 @@
-package com.michaelyogar.tetra.choice;
+package com.michaelyogar.tetra.app.choice;
 
-import com.michaelyogar.tetra.repository.BaseRepository;
+import com.michaelyogar.tetra.app.base.BaseRepository;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
