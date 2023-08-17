@@ -1,4 +1,4 @@
-name: 'Tetra test'
+name: "Tetra test"
 on:
   push:
     branches:
@@ -27,22 +27,22 @@ jobs:
       run:
         working-directory: ${{ env.cwd }}
     steps:
-      - name: Checkout 
+      - name: Checkout
         uses: actions/checkout@v3
-      
+
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
           java-version: 17
-          distribution: 'oracle'
-      
+          distribution: "oracle"
+
       - name: Set up Maven
         uses: stCarolas/setup-maven@v4.5
         with:
           maven-version: 3.9.2
-      
+
       - name: Init env variables
-        run: | 
+        run: |
           echo SPRING_DATASOURCE_URL=${{secrets.SPRING_DATASOURCE_URL}} >> "$GITHUB_ENV"
           echo SPRING_DATASOURCE_USERNAME=${{secrets.SPRING_DATASOURCE_USERNAME}} >> "$GITHUB_ENV"
           echo SPRING_DATASOURCE_PASSWORD=${{secrets.SPRING_DATASOURCE_PASSWORD}} >> "$GITHUB_ENV"
@@ -50,6 +50,7 @@ jobs:
           echo SPRING_MAIL_PASSWORD=${{secrets.SPRING_MAIL_PASSWORD}} >> "$GITHUB_ENV"
           echo SPRING_MAIL_PORT=${{secrets.SPRING_MAIL_PORT}} >> "$GITHUB_ENV"
           echo SPRING_MAIL_USERNAME=${{secrets.SPRING_MAIL_USERNAME}} >> "$GITHUB_ENV"
+          echo SPRING_PROFILES_ACTIVE=${{secrets.SPRING_PROFILES_ACTIVE}} >> "$GITHUB_ENV"
 
       - name: Start mysql server
         run: |
@@ -57,8 +58,3 @@ jobs:
           mysql -e 'CREATE DATABASE ${{ secrets.DB_DATABASE }};' -h 127.0.0.1 -u${{secrets.SPRING_DATASOURCE_USERNAME}} -p${{ secrets.SPRING_DATASOURCE_PASSWORD }}
 
       - run: mvn clean test
-
-
-
-
-
