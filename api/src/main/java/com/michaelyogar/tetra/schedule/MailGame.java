@@ -7,6 +7,8 @@ import com.michaelyogar.tetra.app.user.User;
 import com.michaelyogar.tetra.app.user.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -22,6 +24,8 @@ import java.util.Map;
 
 @Component
 public class MailGame {
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
     private final JavaMailSender mailSender;
     private final TemplateEngine templateEngine;
 
@@ -38,14 +42,14 @@ public class MailGame {
         this.userService = userService;
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(initialDelay = 5000, fixedRate = 5000000)
     public void sendGame() throws Exception {
 
         Game game = gameService.findOldestUnsentGame();
 
         // TODO: Needs better error handling before going to production
         if (game == null) {
-            System.out.println("Game not found, cant send email");
+            LOGGER.error("Game not found");
             return;
         }
 

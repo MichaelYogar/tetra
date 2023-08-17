@@ -1,9 +1,6 @@
 package com.michaelyogar.tetra.app.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 
@@ -15,6 +12,7 @@ public class User {
 
     @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
             flags = Pattern.Flag.CASE_INSENSITIVE)
+    @Column(unique = true)
     private String email_address;
 
     public Long getUserId() {
