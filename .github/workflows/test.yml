@@ -46,10 +46,10 @@ jobs:
           echo SPRING_DATASOURCE_URL=${{secrets.SPRING_DATASOURCE_URL}} >> "$GITHUB_ENV"
           echo SPRING_DATASOURCE_USERNAME=${{secrets.SPRING_DATASOURCE_USERNAME}} >> "$GITHUB_ENV"
           echo SPRING_DATASOURCE_PASSWORD=${{secrets.SPRING_DATASOURCE_PASSWORD}} >> "$GITHUB_ENV"
-          echo SPRING_DATASOURCE_PASSWORD=${{secrets.SPRING_MAIL_HOST}} >> "$GITHUB_ENV"
-          echo SPRING_DATASOURCE_PASSWORD=${{secrets.SPRING_MAIL_PASSWORD}} >> "$GITHUB_ENV"
-          echo SPRING_DATASOURCE_PASSWORD=${{secrets.SPRING_MAIL_PORT}} >> "$GITHUB_ENV"
-          echo SPRING_DATASOURCE_PASSWORD=${{secrets.SPRING_MAIL_USERNAME}} >> "$GITHUB_ENV"
+          echo SPRING_MAIL_HOST=${{secrets.SPRING_MAIL_HOST}} >> "$GITHUB_ENV"
+          echo SPRING_MAIL_PASSWORD=${{secrets.SPRING_MAIL_PASSWORD}} >> "$GITHUB_ENV"
+          echo SPRING_MAIL_PORT=${{secrets.SPRING_MAIL_PORT}} >> "$GITHUB_ENV"
+          echo SPRING_MAIL_USERNAME=${{secrets.SPRING_MAIL_USERNAME}} >> "$GITHUB_ENV"
 
       - name: Start mysql server
         run: |
