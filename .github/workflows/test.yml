@@ -54,7 +54,7 @@ jobs:
       - name: Start mysql server
         run: |
           sudo /etc/init.d/mysql start
-          mysql -e 'CREATE DATABASE ${{ secrets.DB_DATABASE }};' -u${{secrets.SPRING_DATASOURCE_USERNAME}} -p${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+          mysql -e 'CREATE DATABASE ${{ secrets.DB_DATABASE }};' -h 127.0.0.1 -u${{secrets.SPRING_DATASOURCE_USERNAME}} -p${{ secrets.SPRING_DATASOURCE_PASSWORD }}
 
       - run: mvn clean test
 
