@@ -1,0 +1,59 @@
+name: 'Tetra test'
+on:
+  push:
+    branches:
+      - main
+jobs:
+  ui:
+    runs-on: ubuntu-20.04
+    env:
+      cwd: ui
+    defaults:
+      run:
+        working-directory: ${{ env.cwd }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.16.1
+      - run: npm ci
+      - run: npm run build
+  api:
+    runs-on: ubuntu-20.04
+    environment: test
+    env:
+      cwd: api
+    defaults:
+      run:
+        working-directory: ${{ env.cwd }}
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v3
+      
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'oracle'
+      
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v4.5
+        with:
+          maven-version: 3.9.2
+      
+      - name: Init env variables
+        run: | 
+          echo SPRING_DATASOURCE_URL=${{secrets.SPRING_DATASOURCE_URL}} >> "$GITHUB_ENV"
+          echo SPRING_DATASOURCE_USERNAME=${{secrets.SPRING_DATASOURCE_USERNAME}} >> "$GITHUB_ENV"
+          echo SPRING_DATASOURCE_PASSWORD=${{secrets.SPRING_DATASOURCE_PASSWORD}} >> "$GITHUB_ENV"
+
+      - name: Start mysql server
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE ${{ secrets.DB_DATABASE }};' -u${{secrets.SPRING_DATASOURCE_USERNAME}} -p${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+
+
+
+
+
+
