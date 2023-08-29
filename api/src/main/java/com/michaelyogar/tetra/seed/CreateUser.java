@@ -2,11 +2,13 @@ package com.michaelyogar.tetra.seed;
 
 import com.michaelyogar.tetra.app.user.UserService;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
+@Profile("dev")
 @Component
 public class CreateUser implements CommandLineRunner {
     private final UserService userService;

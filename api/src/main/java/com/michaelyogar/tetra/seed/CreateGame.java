@@ -10,11 +10,13 @@ import com.michaelyogar.tetra.app.question.Question;
 import com.michaelyogar.tetra.app.question.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
 @Component
+@Profile("dev")
 public class CreateGame implements CommandLineRunner {
     private final GameRepository gameRepository;
     private final QuestionRepository questionRepository;
