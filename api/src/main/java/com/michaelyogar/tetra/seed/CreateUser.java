@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 @Profile("dev")
 @Component
-public class CreateUser implements CommandLineRunner {
+public class CreateUser implements CommandLineRunner, Seed {
     private final UserService userService;
 
     public CreateUser(UserService userService) {
@@ -19,6 +19,13 @@ public class CreateUser implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        if (seeded())
+            return;
+
         userService.createUser("tentenmichael@gmail.com");
+    }
+
+    public boolean seeded() {
+        return userService.isEmpty();
     }
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.core.GenericTypeResolver;
 
+import java.util.List;
+
 public abstract class BaseRepository<T> {
     private final EntityManager em;
     private final Class type;
@@ -16,6 +18,16 @@ public abstract class BaseRepository<T> {
     @Transactional
     public void save(T entity) {
         em.persist(entity);
+    }
+
+    public boolean isEmpty() {
+        String q = "select exists (SELECT 1 FROM " + getClassName() + " t)";
+        return em.createQuery(q, Boolean.class).getSingleResult();
+    }
+
+    public List<T> findAll() {
+        String q = "select t from " + getClassName() + " t";
+        return em.createQuery(q, getClazz()).getResultList();
     }
 
     public T findById(long id) {

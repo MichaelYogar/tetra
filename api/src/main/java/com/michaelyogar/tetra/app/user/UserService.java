@@ -19,6 +19,10 @@ public class UserService {
     }
 
     public List<User> findAllUsers() {
-        return this.userRepository.findAllUsers();
+        return this.userRepository.findAll();
+    }
+
+    public boolean isEmpty() {
+        return this.userRepository.isEmpty();
     }
 }

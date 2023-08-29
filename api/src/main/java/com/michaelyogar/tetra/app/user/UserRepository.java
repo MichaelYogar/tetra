@@ -14,9 +14,4 @@ public class UserRepository extends BaseRepository<User> {
         super(entityManager);
         this.entityManager = entityManager;
     }
-
-    List<User> findAllUsers() {
-        String q = "Select u from User u";
-        return (List<User>) entityManager.createQuery(q).getResultList();
-    }
 }

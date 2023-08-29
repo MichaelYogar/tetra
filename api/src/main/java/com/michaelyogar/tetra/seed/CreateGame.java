@@ -17,7 +17,7 @@ import java.util.Random;
 
 @Component
 @Profile("dev")
-public class CreateGame implements CommandLineRunner {
+public class CreateGame implements CommandLineRunner, Seed {
     private final GameRepository gameRepository;
     private final QuestionRepository questionRepository;
     private final ChoiceRepository choiceRepository;
@@ -33,9 +33,11 @@ public class CreateGame implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        for (int i = 0; i < 1; i++) {
+        if (seeded())
+            return;
+
+        for (int i = 0; i < 1; i++)
             createGame(i);
-        }
     }
 
     private void createGame(int index) {
@@ -90,5 +92,9 @@ public class CreateGame implements CommandLineRunner {
     private int getRandomNumber(int upperBound) {
         Random rand = new Random();
         return rand.nextInt(upperBound);
+    }
+
+    public boolean seeded() {
+        return gameRepository.isEmpty();
     }
 }
