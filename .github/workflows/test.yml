@@ -4,20 +4,6 @@ on:
     branches:
       - main
 jobs:
-  ui:
-    runs-on: ubuntu-20.04
-    env:
-      cwd: ui
-    defaults:
-      run:
-        working-directory: ${{ env.cwd }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.16.1
-      - run: npm ci
-      - run: npm run build
   api:
     runs-on: ubuntu-20.04
     environment: test
