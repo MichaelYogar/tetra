@@ -1,5 +1,6 @@
 package com.michaelyogar.tetra.seed;
 
+import com.michaelyogar.tetra.app.user.User;
 import com.michaelyogar.tetra.app.user.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -22,7 +23,9 @@ public class CreateUser implements CommandLineRunner, Seed {
         if (seeded())
             return;
 
-        userService.createUser("tentenmichael@gmail.com");
+        User user = new User();
+        user.setEmailAddress("tentenmichael@gmail.com");
+        userService.createUser(user);
     }
 
     public boolean seeded() {

@@ -18,6 +18,8 @@ public class UserController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@RequestBody(required = true) UserDto userDto) {
-        userService.createUser(userDto.getEmail());
+        User user = new User();
+        user.setEmailAddress(userDto.getEmail());
+        userService.createUser(user);
     }
 }
